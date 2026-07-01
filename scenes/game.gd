@@ -7,16 +7,14 @@ extends Node
 @onready var parallax_2d_trees: Parallax2D = $World/Parallax2DTrees
 @onready var pipe_spawner: Node2D = $PipeSpawner
 
+var score := 0
 var parallaxes: Array[Parallax2D]
-# Called when the node enters the scene tree for the first time.
+
+
 func _ready() -> void:
 	SignalBus.player_collided.connect(_on_player_collided)
+	SignalBus.player_cleared_pipe.connect(_on_player_cleared_pipe)
 	parallaxes = [parallax_2d_sky, parallax_2d_clouds, parallax_2d_trees]
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 
 func _on_player_collided() -> void:
 	pipes.stop()
@@ -24,3 +22,8 @@ func _on_player_collided() -> void:
 		p.autoscroll.x = 0
 	pipe_spawner.spawn_disabled = true
 	da_bird.input_disabled = true
+	
+
+func _on_player_cleared_pipe() -> void:
+	score += 1
+	%UI.update_score(score)

@@ -14,6 +14,9 @@ size = Vector2(102, 803)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xga58"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xga58"]
+size = Vector2(136, 1068.5)
+
 [node name="PipeSet" type="Node2D" unique_id=4519154]
 script = ExtResource("1_asio3")
 
@@ -58,3 +61,13 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DespawnDetector" unique_id=352126570]
 shape = SubResource("CircleShape2D_xga58")
+debug_color = Color(0.85465354, 0.30524543, 0.5374993, 0.41960785)
+
+[node name="PipeClearanceArea" type="Area2D" parent="." unique_id=1589283292]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeClearanceArea" unique_id=1741016490]
+position = Vector2(216, 533.75)
+shape = SubResource("RectangleShape2D_xga58")
+debug_color = Color(0.3180593, 0.61270696, 0.3686058, 0.41960785)
+
+[connection signal="body_entered" from="PipeClearanceArea" to="." method="_on_pipe_clearance_area_body_entered"]

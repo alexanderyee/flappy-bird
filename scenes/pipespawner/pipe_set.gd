@@ -29,3 +29,8 @@ func set_speed(speed: float) -> void:
 func set_gap(gap_size: int) -> void:
 	top_pipe.position.y -= gap_size / 2.0
 	bottom_pipe.position.y += gap_size / 2.0
+
+
+func _on_pipe_clearance_area_body_entered(body: Node2D) -> void:
+	if body is Player:
+		SignalBus.player_cleared_pipe.emit()

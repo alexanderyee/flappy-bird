@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bf0tsxjovewvg" path="res://assets/clouds.png" id="3_u5sy4"]
 [ext_resource type="Script" uid="uid://bwaxarcuplglu" path="res://scenes/pipespawner/pipe_spawner.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://g4yld4nwcp2h" path="res://scenes/pipes.gd" id="6_u5sy4"]
+[ext_resource type="Script" uid="uid://cltipxatc0j61" path="res://scenes/ui/ui.gd" id="9_vtaks"]
+[ext_resource type="FontFile" uid="uid://8tmiy8pq160k" path="res://assets/Awesome 9.ttf" id="10_kvpfn"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xga58"]
 
@@ -65,7 +67,7 @@ texture = ExtResource("1_iywne")
 centered = false
 
 [node name="da bird" type="CharacterBody2D" parent="." unique_id=1197427179]
-position = Vector2(350, 542)
+position = Vector2(175, 542)
 collision_mask = 3
 script = ExtResource("1_yqjtg")
 
@@ -86,7 +88,8 @@ script = ExtResource("6_u5sy4")
 position = Vector2(1000, 0)
 script = ExtResource("6_p57ef")
 is_flipped_v = true
-speed = -400.0
+speed = -350.0
+spawn_frequency = 0.9
 
 [node name="Timer" type="Timer" parent="PipeSpawner" unique_id=517727683]
 autostart = true
@@ -98,6 +101,31 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PipeSpawner/DespawnBarrier" unique_id=1574668410]
 position = Vector2(-1632, 582)
 shape = SubResource("RectangleShape2D_p57ef")
+
+[node name="UI" type="Control" parent="." unique_id=383904312]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_vtaks")
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=1916937239]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("10_kvpfn")
+theme_override_font_sizes/font_size = 167
+text = "0"
+horizontal_alignment = 1
 
 [connection signal="timeout" from="PipeSpawner/Timer" to="PipeSpawner" method="_on_timer_timeout"]
 [connection signal="area_entered" from="PipeSpawner/DespawnBarrier" to="PipeSpawner" method="_on_despawn_barrier_area_entered"]
