@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bghq45rw1727i"]
+
+[ext_resource type="Script" uid="uid://cpgxdi6g2egpt" path="res://scenes/pipespawner/pipe_set.gd" id="1_asio3"]
+[ext_resource type="Texture2D" uid="uid://2bd8fsijmla4" path="res://assets/wooden_pipeuh.png" id="2_8beon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asio3"]
+size = Vector2(102, 806)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jdttr"]
+size = Vector2(150, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rvr0"]
+size = Vector2(102, 803)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xga58"]
+
+[node name="PipeSet" type="Node2D" unique_id=4519154]
+script = ExtResource("1_asio3")
+
+[node name="TopPipe" type="StaticBody2D" parent="." unique_id=667450342]
+position = Vector2(0, 583)
+scale = Vector2(1, -1)
+collision_layer = 2
+
+[node name="PipeSprite" type="Sprite2D" parent="TopPipe" unique_id=1997446403]
+scale = Vector2(3, 3)
+texture = ExtResource("2_8beon")
+centered = false
+
+[node name="PipeBodyCollisionShape2D" type="CollisionShape2D" parent="TopPipe" unique_id=128975301]
+position = Vector2(97, 499)
+shape = SubResource("RectangleShape2D_asio3")
+
+[node name="PipeHeadCollisionShape2D" type="CollisionShape2D" parent="TopPipe" unique_id=239416126]
+position = Vector2(99.25, 72.25)
+shape = SubResource("RectangleShape2D_jdttr")
+
+[node name="BottomPipe" type="StaticBody2D" parent="." unique_id=1697106885]
+position = Vector2(0, 483)
+collision_layer = 2
+
+[node name="PipeSprite" type="Sprite2D" parent="BottomPipe" unique_id=123200997]
+scale = Vector2(3, 3)
+texture = ExtResource("2_8beon")
+centered = false
+
+[node name="PipeBodyCollisionShape2D" type="CollisionShape2D" parent="BottomPipe" unique_id=933321815]
+position = Vector2(97, 497.5)
+shape = SubResource("RectangleShape2D_8rvr0")
+
+[node name="PipeHeadCollisionShape2D" type="CollisionShape2D" parent="BottomPipe" unique_id=1773452107]
+position = Vector2(99, 72)
+shape = SubResource("RectangleShape2D_jdttr")
+
+[node name="DespawnDetector" type="Area2D" parent="." unique_id=1582778274]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DespawnDetector" unique_id=352126570]
+shape = SubResource("CircleShape2D_xga58")
