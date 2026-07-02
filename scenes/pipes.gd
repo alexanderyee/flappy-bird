@@ -8,6 +8,7 @@ func stop() -> void:
 		var pipe_set: PipeSet = child as PipeSet
 		pipe_set.set_speed(0)
 
+
 func clear_pipes() -> void:
 	for child: PipeSet in get_children():
 		child.disable_collisions()

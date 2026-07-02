@@ -1,5 +1,6 @@
 extends PanelContainer
 
+
 func show_scores(score: int, high_score: int) -> void:
 	show()
 	%Score.text = "Score: " + str(score)
