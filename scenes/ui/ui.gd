@@ -1,7 +1,6 @@
 class_name UI
 extends Control
 
-
 func update_scores(score: int, high_score: int) -> void:
 	%ScoreLabel.text = str(score)
 	%HighScoreLabel.text = "High score: " + str(high_score)

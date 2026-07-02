@@ -6,12 +6,14 @@ extends Node
 @onready var parallax_2d_clouds: Parallax2D = $World/Parallax2DClouds
 @onready var parallax_2d_trees: Parallax2D = $World/Parallax2DTrees
 @onready var pipe_spawner: Node2D = $PipeSpawner
+@onready var sfx_player: AudioStreamPlayer2D = %SFXPlayer
 
 var score := 0
 var high_score := 0
 var parallaxes: Array[Parallax2D]
 var parallax_speeds: Array[float]
 var bird_spawn_pos: Vector2
+var seconds_since_game_over := 0.0 # used to block player input right after dying
 
 func _ready() -> void:
 	SignalBus.player_collided.connect(_on_player_collided)
@@ -22,7 +24,15 @@ func _ready() -> void:
 		parallax_speeds.append(p.autoscroll.x)
 	bird_spawn_pos = da_bird.position
 	
-
+func _process(delta: float) -> void:
+	if Input.is_action_pressed("jump"):
+		if %GameOverPanel.visible and seconds_since_game_over >= 1.5:
+			_on_game_restart()
+	
+	if %GameOverPanel.visible:
+		seconds_since_game_over += delta
+	
+	
 func start() -> void:
 	for i in 3:
 		parallaxes[i].autoscroll.x = parallax_speeds[i]
@@ -50,8 +60,9 @@ func _on_player_cleared_pipe() -> void:
 	if score > high_score:
 		high_score = score
 	%UI.update_scores(score, high_score)
-
+	%SFXPlayer.play_point_scored()
 
 func _on_game_restart() -> void:
 	%UI.restart_game()
 	start()
+	seconds_since_game_over = 0.0

@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://clq5pileekimg" path="res://scenes/game_over_panel.tscn" id="11_kvpfn"]
 [ext_resource type="Script" uid="uid://cinj3j55hiulu" path="res://scenes/ui/audio_stream_player_2d.gd" id="12_dinhu"]
 [ext_resource type="AudioStream" uid="uid://cjm624u5gn2qy" path="res://assets/Jump 1.wav" id="13_kvuet"]
+[ext_resource type="Script" uid="uid://c1bbkp180fb81" path="res://scenes/ui/sfx_player.gd" id="16_ca42v"]
+[ext_resource type="AudioStream" uid="uid://d4nqo0lglksle" path="res://assets/Fruit collect 1.wav" id="17_rysoc"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xga58"]
 
@@ -163,6 +165,11 @@ offset_left = -171.5
 offset_top = -156.5
 offset_right = 171.5
 offset_bottom = 156.5
+
+[node name="SFXPlayer" type="AudioStreamPlayer2D" parent="UI" unique_id=1999671973]
+unique_name_in_owner = true
+script = ExtResource("16_ca42v")
+point_scored_sound = ExtResource("17_rysoc")
 
 [connection signal="timeout" from="PipeSpawner/Timer" to="PipeSpawner" method="_on_timer_timeout"]
 [connection signal="area_entered" from="PipeSpawner/DespawnBarrier" to="PipeSpawner" method="_on_despawn_barrier_area_entered"]

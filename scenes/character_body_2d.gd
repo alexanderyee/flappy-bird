@@ -13,14 +13,14 @@ func _physics_process(delta: float) -> void:
 	else:
 		return
 	
-	if Input.is_action_just_pressed("ui_accept") and !input_disabled:
+	if Input.is_action_just_pressed("jump") and !input_disabled:
 		velocity.y = JUMP_VELOCITY
 		audio_stream_player_2d.play_jump_sound()
+		
 
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
-		print(collision.get_collider())
 		if collision.get_collider().get_parent() is PipeSet or collision.get_collider() is Floor:
 			crash()
 
@@ -28,6 +28,7 @@ func crash() -> void:
 	if !input_disabled:
 		audio_stream_player_2d.play_crash_sound()
 	SignalBus.player_collided.emit()
+	velocity.x = 0
 	
 func move_player(pos: Vector2) -> void:
 	position = pos
