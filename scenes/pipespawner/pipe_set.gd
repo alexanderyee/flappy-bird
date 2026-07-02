@@ -34,3 +34,8 @@ func set_gap(gap_size: int) -> void:
 func _on_pipe_clearance_area_body_entered(body: Node2D) -> void:
 	if body is Player:
 		SignalBus.player_cleared_pipe.emit()
+
+
+func disable_collisions() -> void:
+	for col_shape in [$TopPipe/PipeBodyCollisionShape2D, $TopPipe/PipeHeadCollisionShape2D, $BottomPipe/PipeBodyCollisionShape2D, $BottomPipe/PipeHeadCollisionShape2D]:
+		col_shape.disabled = true

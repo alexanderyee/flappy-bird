@@ -9,5 +9,6 @@ func stop() -> void:
 		pipe_set.set_speed(0)
 
 func clear_pipes() -> void:
-	for child in get_children():
+	for child: PipeSet in get_children():
+		child.disable_collisions()
 		child.queue_free()
