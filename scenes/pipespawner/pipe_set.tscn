@@ -7,7 +7,7 @@
 size = Vector2(102, 806)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jdttr"]
-size = Vector2(150, 36)
+size = Vector2(135.16667, 36)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rvr0"]
 size = Vector2(102, 803)
@@ -21,8 +21,8 @@ size = Vector2(136, 1068.5)
 script = ExtResource("1_asio3")
 
 [node name="TopPipe" type="StaticBody2D" parent="." unique_id=667450342]
-position = Vector2(0, 583)
-scale = Vector2(1, -1)
+position = Vector2(0, 554.795)
+scale = Vector2(0.6, -0.6)
 collision_layer = 2
 
 [node name="PipeSprite" type="Sprite2D" parent="TopPipe" unique_id=1997446403]
@@ -35,11 +35,12 @@ position = Vector2(97, 499)
 shape = SubResource("RectangleShape2D_asio3")
 
 [node name="PipeHeadCollisionShape2D" type="CollisionShape2D" parent="TopPipe" unique_id=239416126]
-position = Vector2(99.25, 72.25)
+position = Vector2(101.666664, 72.99163)
 shape = SubResource("RectangleShape2D_jdttr")
 
 [node name="BottomPipe" type="StaticBody2D" parent="." unique_id=1697106885]
-position = Vector2(0, 483)
+position = Vector2(0, 496)
+scale = Vector2(0.6, 0.6)
 collision_layer = 2
 
 [node name="PipeSprite" type="Sprite2D" parent="BottomPipe" unique_id=123200997]
@@ -66,7 +67,7 @@ debug_color = Color(0.85465354, 0.30524543, 0.5374993, 0.41960785)
 [node name="PipeClearanceArea" type="Area2D" parent="." unique_id=1589283292]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PipeClearanceArea" unique_id=1741016490]
-position = Vector2(216, 533.75)
+position = Vector2(191, 534)
 shape = SubResource("RectangleShape2D_xga58")
 debug_color = Color(0.3180593, 0.61270696, 0.3686058, 0.41960785)
 

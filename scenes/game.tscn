@@ -4,12 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://o2uoq85cx2lf" path="res://assets/trees.png" id="1_iywne"]
 [ext_resource type="Texture2D" uid="uid://cghuvjahds4d8" path="res://assets/placeholder_bird_sprite.png" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://bbqxgh5b6lsrf" path="res://scenes/character_body_2d.gd" id="1_yqjtg"]
+[ext_resource type="Script" uid="uid://b8tlqur7356os" path="res://scenes/floor.gd" id="2_ir15t"]
 [ext_resource type="Texture2D" uid="uid://bbcsik1v7p34s" path="res://assets/sky.png" id="2_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bf0tsxjovewvg" path="res://assets/clouds.png" id="3_u5sy4"]
 [ext_resource type="Script" uid="uid://bwaxarcuplglu" path="res://scenes/pipespawner/pipe_spawner.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://g4yld4nwcp2h" path="res://scenes/pipes.gd" id="6_u5sy4"]
+[ext_resource type="AudioStream" uid="uid://x5v8ve36388d" path="res://assets/jixaw-metal-pipe-falling-sound.mp3" id="8_trtic"]
 [ext_resource type="Script" uid="uid://cltipxatc0j61" path="res://scenes/ui/ui.gd" id="9_vtaks"]
 [ext_resource type="FontFile" uid="uid://8tmiy8pq160k" path="res://assets/Awesome 9.ttf" id="10_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://clq5pileekimg" path="res://scenes/game_over_panel.tscn" id="11_kvpfn"]
+[ext_resource type="Script" uid="uid://cinj3j55hiulu" path="res://scenes/ui/audio_stream_player_2d.gd" id="12_dinhu"]
+[ext_resource type="AudioStream" uid="uid://cjm624u5gn2qy" path="res://assets/Jump 1.wav" id="13_kvuet"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xga58"]
 
@@ -28,6 +33,7 @@ script = ExtResource("1_gee14")
 [node name="World" type="Node2D" parent="." unique_id=128404560]
 
 [node name="Floor" type="StaticBody2D" parent="World" unique_id=330978088]
+script = ExtResource("2_ir15t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Floor" unique_id=19666331]
 position = Vector2(239, 1066)
@@ -71,6 +77,12 @@ position = Vector2(175, 542)
 collision_mask = 3
 script = ExtResource("1_yqjtg")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="da bird" unique_id=1272478562]
+position = Vector2(-175, -542)
+script = ExtResource("12_dinhu")
+jump_sound = ExtResource("13_kvuet")
+crash_sound = ExtResource("8_trtic")
+
 [node name="Sprite2D" type="Sprite2D" parent="da bird" unique_id=736838962]
 position = Vector2(2, 4)
 scale = Vector2(5, 5)
@@ -89,7 +101,8 @@ position = Vector2(1000, 0)
 script = ExtResource("6_p57ef")
 is_flipped_v = true
 speed = -350.0
-spawn_frequency = 0.9
+spawn_frequency = 1.2
+spawn_offset_range = 200
 
 [node name="Timer" type="Timer" parent="PipeSpawner" unique_id=517727683]
 autostart = true
@@ -112,20 +125,44 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_vtaks")
 
-[node name="ScoreLabel" type="Label" parent="UI" unique_id=1916937239]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1170040240]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+offset_left = -42.0
+offset_right = 42.0
+offset_bottom = 340.0
 grow_horizontal = 2
+
+[node name="ScoreLabel" type="Label" parent="UI/VBoxContainer" unique_id=1916937239]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("10_kvpfn")
 theme_override_font_sizes/font_size = 167
 text = "0"
 horizontal_alignment = 1
+
+[node name="HighScoreLabel" type="Label" parent="UI/VBoxContainer" unique_id=404697135]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_kvpfn")
+theme_override_font_sizes/font_size = 48
+text = "High score: "
+horizontal_alignment = 1
+
+[node name="GameOverPanel" parent="UI" unique_id=476615019 instance=ExtResource("11_kvpfn")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = -171.5
+offset_top = -156.5
+offset_right = 171.5
+offset_bottom = 156.5
 
 [connection signal="timeout" from="PipeSpawner/Timer" to="PipeSpawner" method="_on_timer_timeout"]
 [connection signal="area_entered" from="PipeSpawner/DespawnBarrier" to="PipeSpawner" method="_on_despawn_barrier_area_entered"]

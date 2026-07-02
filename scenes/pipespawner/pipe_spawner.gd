@@ -28,7 +28,7 @@ func _process(_delta: float) -> void:
 func _on_timer_timeout() -> void:
 	if spawn_disabled:
 		return
-	
+
 	var pipe_set: PipeSet = PIPE_SET.instantiate()
 	pipe_set.setup(speed, rng.randi_range(-spawn_offset_range, spawn_offset_range), gap_size)
 	pipes.add_child(pipe_set)
