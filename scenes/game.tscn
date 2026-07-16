@@ -68,6 +68,7 @@ centered = false
 [node name="Parallax2DTrees" type="Parallax2D" parent="World" unique_id=1273760718]
 repeat_size = Vector2(792, 0)
 autoscroll = Vector2(-60, 0)
+repeat_times = 3
 
 [node name="trees" type="Sprite2D" parent="World/Parallax2DTrees" unique_id=292726067]
 position = Vector2(0, 613)
@@ -105,7 +106,7 @@ script = ExtResource("6_p57ef")
 is_flipped_v = true
 speed = -350.0
 spawn_frequency = 1.2
-spawn_offset_range = 200
+spawn_offset_range = 250
 
 [node name="Timer" type="Timer" parent="PipeSpawner" unique_id=517727683]
 autostart = true
