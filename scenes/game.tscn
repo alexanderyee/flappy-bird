@@ -8,17 +8,20 @@
 [ext_resource type="Texture2D" uid="uid://bf0tsxjovewvg" path="res://assets/clouds.png" id="3_u5sy4"]
 [ext_resource type="Script" uid="uid://bwaxarcuplglu" path="res://scenes/pipespawner/pipe_spawner.gd" id="6_p57ef"]
 [ext_resource type="Script" uid="uid://g4yld4nwcp2h" path="res://scenes/pipes.gd" id="6_u5sy4"]
-[ext_resource type="AudioStream" uid="uid://x5v8ve36388d" path="res://assets/jixaw-metal-pipe-falling-sound.mp3" id="8_trtic"]
+[ext_resource type="AudioStream" uid="uid://crbnn63gjrnnb" path="res://assets/song115.wav" id="8_264po"]
+[ext_resource type="AudioStream" uid="uid://y31rlos6ho0x" path="res://assets/punch.wav" id="9_264po"]
 [ext_resource type="Script" uid="uid://cltipxatc0j61" path="res://scenes/ui/ui.gd" id="9_vtaks"]
 [ext_resource type="FontFile" uid="uid://8tmiy8pq160k" path="res://assets/Awesome 9.ttf" id="10_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://cl0dnk5rx73j1" path="res://assets/kirby_flying.png" id="10_ssvqc"]
 [ext_resource type="Texture2D" uid="uid://d2csruwnfppf4" path="res://assets/kirby_surprised.png" id="11_264po"]
 [ext_resource type="PackedScene" uid="uid://clq5pileekimg" path="res://scenes/game_over_panel.tscn" id="11_kvpfn"]
 [ext_resource type="Script" uid="uid://cinj3j55hiulu" path="res://scenes/ui/audio_stream_player_2d.gd" id="12_dinhu"]
-[ext_resource type="AudioStream" uid="uid://cjm624u5gn2qy" path="res://assets/Jump 1.wav" id="13_kvuet"]
 [ext_resource type="Script" uid="uid://c1bbkp180fb81" path="res://scenes/ui/sfx_player.gd" id="16_ca42v"]
 [ext_resource type="AudioStream" uid="uid://d4nqo0lglksle" path="res://assets/Fruit collect 1.wav" id="17_rysoc"]
 [ext_resource type="Script" uid="uid://ct6tr8m0tfnfy" path="res://scenes/score_manager.gd" id="18_ssvqc"]
+[ext_resource type="Script" uid="uid://c70fppfu74ihr" path="res://scripts/game_states/new_run_state.gd" id="20_37s47"]
+[ext_resource type="Script" uid="uid://cdgdbm74voffv" path="res://scripts/game_states/flapping_state.gd" id="21_bt5mj"]
+[ext_resource type="Script" uid="uid://8hxl8dl53b8h" path="res://scripts/game_states/dead_state.gd" id="22_e1j6l"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xga58"]
 
@@ -159,11 +162,11 @@ position = Vector2(175, 542)
 collision_mask = 3
 script = ExtResource("1_yqjtg")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="da bird" unique_id=1272478562]
-position = Vector2(-175, -542)
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="da bird" unique_id=1252625828]
+volume_db = -5.438
 script = ExtResource("12_dinhu")
-jump_sound = ExtResource("13_kvuet")
-crash_sound = ExtResource("8_trtic")
+jump_sound = ExtResource("8_264po")
+crash_sound = ExtResource("9_264po")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="da bird" unique_id=1865674279]
 scale = Vector2(3, 3)
@@ -254,6 +257,21 @@ point_scored_sound = ExtResource("17_rysoc")
 
 [node name="ScoreManager" type="Node" parent="." unique_id=1575249640]
 script = ExtResource("18_ssvqc")
+
+[node name="States" type="Node" parent="." unique_id=92045063]
+unique_name_in_owner = true
+
+[node name="NewRunState" type="Node" parent="States" unique_id=535991513]
+script = ExtResource("20_37s47")
+metadata/_custom_type_script = "uid://c70fppfu74ihr"
+
+[node name="FlappingState" type="Node" parent="States" unique_id=1691990620]
+script = ExtResource("21_bt5mj")
+metadata/_custom_type_script = "uid://cdgdbm74voffv"
+
+[node name="DeadState" type="Node" parent="States" unique_id=314330810]
+script = ExtResource("22_e1j6l")
+metadata/_custom_type_script = "uid://8hxl8dl53b8h"
 
 [connection signal="timeout" from="PipeSpawner/Timer" to="PipeSpawner" method="_on_timer_timeout"]
 [connection signal="area_entered" from="PipeSpawner/DespawnBarrier" to="PipeSpawner" method="_on_despawn_barrier_area_entered"]

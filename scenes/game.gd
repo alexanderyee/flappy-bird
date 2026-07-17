@@ -1,5 +1,13 @@
 extends Node
 
+var score := 0
+var parallaxes: Array[Parallax2D]
+var parallax_speeds: Array[float]
+var bird_spawn_pos: Vector2
+var seconds_since_game_over := 0.0  # used to block player input right after dying
+var curr_state: GameState
+var states: Dictionary[String, GameState] = {}
+
 @onready var da_bird: Player = $"da bird"
 @onready var pipes: Pipes = $Pipes
 @onready var parallax_2d_sky: Parallax2D = $World/Parallax2DSky
@@ -7,13 +15,8 @@ extends Node
 @onready var parallax_2d_trees: Parallax2D = $World/Parallax2DTrees
 @onready var pipe_spawner: Node2D = $PipeSpawner
 @onready var sfx_player: AudioStreamPlayer2D = %SFXPlayer
-
-var score := 0
-var parallaxes: Array[Parallax2D]
-var parallax_speeds: Array[float]
-var bird_spawn_pos: Vector2
-var seconds_since_game_over := 0.0  # used to block player input right after dying
 @onready var score_manager: ScoreManager = $ScoreManager
+
 
 
 func _ready() -> void:
@@ -24,6 +27,12 @@ func _ready() -> void:
 	for p in parallaxes:
 		parallax_speeds.append(p.autoscroll.x)
 	bird_spawn_pos = da_bird.position
+	
+	for child in %States.get_children():
+		assert(child is GameState)
+		states[child.name.to_lower()] = child
+		child.transitioned.connect(_on_state_transitioned)
+		_on_state_transitioned(states["newrunstate"])
 	
 	%UI.update_scores(score, score_manager.high_score)
 
@@ -38,7 +47,7 @@ func _process(delta: float) -> void:
 
 
 func start() -> void:
-	for i in 3:
+	for i in parallaxes.size():
 		parallaxes[i].autoscroll.x = parallax_speeds[i]
 	# clear pipes
 	pipes.clear_pipes()
@@ -57,7 +66,8 @@ func _on_player_collided() -> void:
 	pipe_spawner.spawn_disabled = true
 	da_bird.input_disabled = true
 	%UI.show_game_over(score, score_manager.high_score)
-	
+
+
 	if score >= score_manager.high_score:
 		score_manager.save_high_score()
 
@@ -74,3 +84,12 @@ func _on_game_restart() -> void:
 	%UI.restart_game()
 	start()
 	seconds_since_game_over = 0.0
+
+
+func _on_state_transitioned(new_game_state: GameState) -> void:
+	if curr_state != null:
+		curr_state.exit()
+	
+	new_game_state.enter()
+	curr_state = new_game_state
+	

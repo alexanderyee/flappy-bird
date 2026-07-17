@@ -1,5 +1,5 @@
 class_name PlayerSFX
-extends AudioStreamPlayer2D
+extends AudioStreamPlayer
 
 @export var jump_sound: AudioStream
 @export var crash_sound: AudioStream
@@ -7,6 +7,7 @@ extends AudioStreamPlayer2D
 
 func play_jump_sound() -> void:
 	stream = jump_sound
+	pitch_scale = randf_range(.9, 1.1)
 	play()
 
 
