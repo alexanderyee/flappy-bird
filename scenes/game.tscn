@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://76yxvd6wcd6q" path="res://scenes/game.gd" id="1_gee14"]
 [ext_resource type="Texture2D" uid="uid://o2uoq85cx2lf" path="res://assets/trees.png" id="1_iywne"]
-[ext_resource type="Texture2D" uid="uid://cghuvjahds4d8" path="res://assets/placeholder_bird_sprite.png" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://bbqxgh5b6lsrf" path="res://scenes/character_body_2d.gd" id="1_yqjtg"]
 [ext_resource type="Script" uid="uid://b8tlqur7356os" path="res://scenes/floor.gd" id="2_ir15t"]
 [ext_resource type="Texture2D" uid="uid://bbcsik1v7p34s" path="res://assets/sky.png" id="2_p57ef"]
@@ -12,6 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://x5v8ve36388d" path="res://assets/jixaw-metal-pipe-falling-sound.mp3" id="8_trtic"]
 [ext_resource type="Script" uid="uid://cltipxatc0j61" path="res://scenes/ui/ui.gd" id="9_vtaks"]
 [ext_resource type="FontFile" uid="uid://8tmiy8pq160k" path="res://assets/Awesome 9.ttf" id="10_kvpfn"]
+[ext_resource type="Texture2D" uid="uid://cl0dnk5rx73j1" path="res://assets/kirby_flying.png" id="10_ssvqc"]
+[ext_resource type="Texture2D" uid="uid://d2csruwnfppf4" path="res://assets/kirby_surprised.png" id="11_264po"]
 [ext_resource type="PackedScene" uid="uid://clq5pileekimg" path="res://scenes/game_over_panel.tscn" id="11_kvpfn"]
 [ext_resource type="Script" uid="uid://cinj3j55hiulu" path="res://scenes/ui/audio_stream_player_2d.gd" id="12_dinhu"]
 [ext_resource type="AudioStream" uid="uid://cjm624u5gn2qy" path="res://assets/Jump 1.wav" id="13_kvuet"]
@@ -24,8 +25,82 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u5sy4"]
 normal = Vector2(0, 1)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_264po"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl11u"]
+atlas = ExtResource("11_264po")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssvqc"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kice"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5newe"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37s47"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bt5mj"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1j6l"]
+atlas = ExtResource("10_ssvqc")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xga58"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_264po")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl11u")
+}],
+"loop": 1,
+"name": &"die",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssvqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kice")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5newe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37s47")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bt5mj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1j6l")
+}],
+"loop": 0,
+"name": &"flap",
+"speed": 20.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_xga58"]
-radius = 42.047592
+radius = 34.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p57ef"]
 size = Vector2(149, 2932)
@@ -49,6 +124,8 @@ position = Vector2(239, -200)
 shape = SubResource("WorldBoundaryShape2D_u5sy4")
 
 [node name="Parallax2DSky" type="Parallax2D" parent="World" unique_id=1468773972]
+repeat_size = Vector2(1500, 0)
+repeat_times = 2
 
 [node name="sky" type="Sprite2D" parent="World/Parallax2DSky" unique_id=158434505]
 scale = Vector2(116.375, 13.3125)
@@ -58,6 +135,7 @@ centered = false
 [node name="Parallax2DClouds" type="Parallax2D" parent="World" unique_id=180852927]
 repeat_size = Vector2(1788, 0)
 autoscroll = Vector2(-3, 0)
+repeat_times = 5
 
 [node name="clouds" type="Sprite2D" parent="World/Parallax2DClouds" unique_id=404989599]
 position = Vector2(0, 277)
@@ -68,7 +146,7 @@ centered = false
 [node name="Parallax2DTrees" type="Parallax2D" parent="World" unique_id=1273760718]
 repeat_size = Vector2(792, 0)
 autoscroll = Vector2(-60, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="trees" type="Sprite2D" parent="World/Parallax2DTrees" unique_id=292726067]
 position = Vector2(0, 613)
@@ -87,10 +165,11 @@ script = ExtResource("12_dinhu")
 jump_sound = ExtResource("13_kvuet")
 crash_sound = ExtResource("8_trtic")
 
-[node name="Sprite2D" type="Sprite2D" parent="da bird" unique_id=736838962]
-position = Vector2(2, 4)
-scale = Vector2(5, 5)
-texture = ExtResource("1_uwrxv")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="da bird" unique_id=1865674279]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_xga58")
+animation = &"die"
+frame_progress = 0.84087837
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="da bird" unique_id=635786358]
 position = Vector2(0, -8)
@@ -101,7 +180,7 @@ position = Vector2(1000, 0)
 script = ExtResource("6_u5sy4")
 
 [node name="PipeSpawner" type="Node2D" parent="." unique_id=766678814]
-position = Vector2(1000, 0)
+position = Vector2(2144, 0)
 script = ExtResource("6_p57ef")
 is_flipped_v = true
 speed = -350.0
@@ -116,7 +195,7 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PipeSpawner/DespawnBarrier" unique_id=1574668410]
-position = Vector2(-1632, 582)
+position = Vector2(-3009, 512)
 shape = SubResource("RectangleShape2D_p57ef")
 
 [node name="UI" type="Control" parent="." unique_id=383904312]

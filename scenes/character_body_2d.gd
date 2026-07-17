@@ -6,6 +6,7 @@ const JUMP_VELOCITY = -400.0
 var input_disabled := false
 
 @onready var audio_stream_player_2d: PlayerSFX = $AudioStreamPlayer2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 
 func _physics_process(delta: float) -> void:
@@ -17,6 +18,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and !input_disabled:
 		velocity.y = JUMP_VELOCITY
 		audio_stream_player_2d.play_jump_sound()
+		if animated_sprite_2d.is_playing():
+			animated_sprite_2d.stop()
+		animated_sprite_2d.play("flap")
+		
 
 	move_and_slide()
 	for i in get_slide_collision_count():
@@ -29,6 +34,7 @@ func crash() -> void:
 	if !input_disabled:
 		audio_stream_player_2d.play_crash_sound()
 	SignalBus.player_collided.emit()
+	animated_sprite_2d.play("die")
 	velocity.x = 0
 
 
